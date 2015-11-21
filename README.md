@@ -4,7 +4,7 @@ HTML5 &amp; CSS3 &amp; JS Example of providing Geolocation &amp; Online connecti
 
 ## Information
 
-HTML5/CSS3 features example like Geolocation, Online connectivity and device/screen orientation.
+HTML5/CSS3 features example like Geolocation, Online connectivity and device/screen orientation. Based on html5rocks tutorials: <http://www.html5rocks.com>
 
 ## Licence
 
