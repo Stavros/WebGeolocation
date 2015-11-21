@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- index.html
+  ==============================================================================================
+  Designed by Stavros Kalapothas
+  Project: HTML5 & CSS3
+  Date: 02/2013
+  ==============================================================================================
+-->
+<head>
+<meta charset=utf-8>
+<title>HTML5 for SDY61 - Login</title>
+<link rel="stylesheet" href="css/html5sdy.css"> <!-- css file location -->
+</head>
+<body>
+<section id="wrapper">
+
+<header>
+  <h1>HTML5 for SDY61</h1>
+  <h2>Online connectivity monitoring<h2>
+</header>
+
+<article>
+  <p>Current network status: <span id="status">checking...</span></p>
+  <ol id="state"></ol>
+</article>
+<script>
+// call devorient() on load
+devorient();
+
+// DOM Elements into vars
+var status  = document.getElementById('status'),
+    state 	= document.getElementById('state'),
+	login	= document.getElementById('login');
+
+function online(event) {
+  status.className = window.navigator.onLine ? 'online' : 'offline'; // apply online/offline style class to id=status depending on online/offline browser connection status
+  status.innerHTML = window.navigator.onLine ? 'online' : 'offline'; // apply html text id=status depending on online/offline browser connection status
+  document.getElementById('login').style.visibility = 'visible'; // make the section login visible when we 're back online
+
+  // if not online then show alert and hide the login form
+  if (!navigator.onLine) {
+	alert("Check your internet connection");
+	document.getElementById('login').style.visibility = 'hidden';
+  }
+}
+
+// listen to events Load,online,offline and call online()
+if (window.addEventListener) {
+		window.addEventListener("load", online, false);
+  		window.addEventListener("online", online, false);
+		window.addEventListener("offline", online, false);
+	}
+	else {
+		// for IE only
+		document.body.ononline = online;
+		document.body.onoffline = online;
+	}
+
+// call online() on load
+online({ type: 'ready' });
+
+function devorient(){
+if (window.DeviceOrientationEvent) {
+  // Listen for the deviceorientation event and handle the raw data
+  window.addEventListener('deviceorientation', function(eventData) {
+    // gamma is the left-to-right tilt in degrees, where right is positive
+    var tiltLR = eventData.gamma;
+
+    // call our orientation event handler
+    deviceOrientationHandler(tiltLR);
+  }, false);
+} else if (window.OrientationEvent) {
+  window.addEventListener('MozOrientation', function(eventData) {
+    // x is the left-to-right tilt from -1 to +1, so we need to convert to degrees
+    var tiltLR = eventData.x * 90;
+
+    // call our orientation event handler
+    deviceOrientationHandler(tiltLR);
+  }, false);
+}
+}
+
+// function to apply the transform to the image
+function deviceOrientationHandler(tiltLR){
+  document.getElementById("phoneimg").style.webkitTransform = "rotate(" + (tiltLR*-1) + "deg)";
+  document.getElementById("phoneimg").style.MozTransform = "rotate(" + (tiltLR*-1) + "deg)";
+  document.getElementById("phoneimg").style.transform = "rotate(" + (tiltLR*-1) +  "deg)";
+}
+
+</script>
+
+	<section id="login" class="loginform cf" >
+		<form id="login" name="login" action="./geo.html" method="get" accept-charset="utf-8"> <!-- on submit open new page and passes atributes into URL -->
+			<ul>
+				<li>
+					<label for="username">Name</label>
+					<input type="text" name="username" placeholder="yourname" required> <!-- input type textbox with placeholder text that is a required field -->
+				</li>
+				<li>
+					<input id="btn" type="submit" value="Next"> <!-- submit button -->
+				</li>
+			</ul>
+		</form>
+	</section>
+
+<a id="html5badge" href="http://www.w3.org/html/logo/">
+<img id="html5img" src="http://www.w3.org/html/logo/badge/html5-badge-h-connectivity-device-graphics-multimedia-performance-semantics-storage.png" width="325" height="64" alt="HTML5 Powered with Connectivity / Realtime, Device Access, Graphics, 3D &amp; Effects, Multimedia, Performance &amp; Integration, Semantics, and Offline &amp; Storage" title="HTML5 Powered with Connectivity / Realtime, Device Access, Graphics, 3D &amp; Effects, Multimedia, Performance &amp; Integration, Semantics, and Offline &amp; Storage">
+</a>
+
+  <img id="css3badge" src="./images/css3_logo_64.png" data-src-600px="./images/css3_logo_128.png" data-src-1200px="./images/css3_logo_256.png" alt="css3badge" title="css3badge">
+  <img id="phoneimg" src="./images/phone.png" width="50" height="84" alt="PhoneImage" title="PhoneImage">
+
+    <footer><a id="built" href="http://twitter.com/stavros_it">@Stavros_IT built this</a>/<a href="view-source:index.html">view source</a></footer>
+</section>
+
+</body>
+</html>
